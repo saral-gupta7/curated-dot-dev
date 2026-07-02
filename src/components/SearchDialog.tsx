@@ -2,7 +2,7 @@ import { BookOpenText, CornerDownLeft, Play, Search, X } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { KeyboardEvent } from 'react'
 import { useShallow } from 'zustand/react/shallow'
-import { ARTICLE_RESOURCES, VIDEO_RESOURCES } from '../contants'
+import { ARTICLE_RESOURCES, VIDEO_RESOURCES } from '../constants'
 import { cn } from '../lib/utils'
 import { useAppStore } from '../stores/useAppStore'
 

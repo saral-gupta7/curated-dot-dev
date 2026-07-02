@@ -11,7 +11,7 @@ import {
   VIDEO_RESOURCES,
   getTopicIds,
   getTopicLabel,
-} from '../contants'
+} from '../constants'
 import { cn } from '../lib/utils'
 import { useAppStore } from '../stores/useAppStore'
 

@@ -5,8 +5,8 @@ import {
   VIDEO_RESOURCES,
   getTopicIds,
   getTopicLabel,
-} from './contants'
-import type { TopicNode } from './contants'
+} from '.'
+import type { TopicNode } from '.'
 
 function flattenTopicIds(topics: TopicNode[]): string[] {
   return topics.flatMap((topic) => [

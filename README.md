@@ -15,7 +15,7 @@ The development server runs at `http://localhost:3000`.
 
 ## Content
 
-Topic groups, video resources, and article resources live in `src/contants.ts`. The file intentionally keeps all placeholder content together so the library can be updated without changing presentation components.
+Content is organized under `src/constants/`: topic navigation in `topicGroups.ts`, videos in `videoResources.ts`, articles in `articleResources.ts`, shared types in `constants.types.ts`, and taxonomy utilities in `topicHelpers.ts`.
 
 ## Quality checks
 

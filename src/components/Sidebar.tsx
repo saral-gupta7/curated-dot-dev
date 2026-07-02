@@ -1,8 +1,8 @@
 import { BookOpen, ChevronDown, Menu, Moon, Search, Sun, X } from 'lucide-react'
 import { useState } from 'react'
 import { useShallow } from 'zustand/react/shallow'
-import { LIBRARY_LINKS, TOPIC_GROUPS, getTopicIds } from '../contants'
-import type { TopicNode } from '../contants'
+import { LIBRARY_LINKS, TOPIC_GROUPS, getTopicIds } from '../constants'
+import type { TopicNode } from '../constants'
 import { cn } from '../lib/utils'
 import { useAppStore } from '../stores/useAppStore'
 

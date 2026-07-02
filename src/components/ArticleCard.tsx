@@ -1,5 +1,5 @@
 import { ArrowUpRight, BookOpenText } from 'lucide-react'
-import type { ArticleResource } from '../contants'
+import type { ArticleResource } from '../constants'
 
 export function ArticleCard({ article }: { article: ArticleResource }) {
   return (

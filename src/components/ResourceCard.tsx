@@ -1,5 +1,5 @@
 import { ArrowUpRight, Play } from 'lucide-react'
-import type { VideoResource } from '../contants'
+import type { VideoResource } from '../constants'
 
 export function ResourceCard({
   resource,
