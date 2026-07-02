@@ -23,6 +23,7 @@ export const TOPIC_GROUPS: TopicGroup[] = [
       { id: 'javascript', label: 'JavaScript' },
       { id: 'typescript', label: 'TypeScript' },
       { id: 'cpp', label: 'C++' },
+      { id: 'rust', label: 'Rust' },
     ],
   },
   {

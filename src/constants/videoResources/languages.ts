@@ -81,4 +81,28 @@ export const LANGUAGE_VIDEOS: VideoResource[] = [
     thumbnail: 'https://i.ytimg.com/vi/LGOgNqkRMs0/sddefault.jpg',
     url: 'https://www.youtube.com/playlist?list=PLvv0ScY6vfd8j-tlhYVPYgiIyXduu6m-L',
   },
+
+  {
+    id: 30,
+    title: 'Rust Bootcamp Part 1',
+    description: '',
+    topic: 'rust',
+    author: 'Harkirat Singh',
+    duration: '4h 1m',
+    level: 'Intermediate',
+    thumbnail: 'https://i.ytimg.com/vi/qP7LzZqGh30/sddefault.jpg',
+    url: 'https://www.youtube.com/watch?v=qP7LzZqGh30',
+  },
+
+  {
+    id: 31,
+    title: 'Rust Bootcamp Part 2',
+    description: '',
+    topic: 'rust',
+    author: 'Harkirat Singh',
+    duration: '6h 20m',
+    level: 'Intermediate',
+    thumbnail: 'https://i.ytimg.com/vi/joCFbTJt0o0/sddefault.jpg',
+    url: 'https://www.youtube.com/watch?v=joCFbTJt0o0',
+  },
 ]
