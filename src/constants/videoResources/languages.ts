@@ -2,18 +2,6 @@ import type { VideoResource } from '../constants.types'
 
 export const LANGUAGE_VIDEOS: VideoResource[] = [
   {
-    id: 1,
-    title: 'JavaScript: The Hard Parts',
-    description:
-      'A durable mental model for closures, callbacks, and asynchronous JavaScript.',
-    topic: 'javascript',
-    author: 'Frontend Masters',
-    duration: '9h 14m',
-    level: 'Intermediate',
-    thumbnail: 'https://i.ytimg.com/vi/Bv_5Zv5c-Ts/maxresdefault.jpg',
-    url: 'https://www.youtube.com/watch?v=Bv_5Zv5c-Ts',
-  },
-  {
     id: 2,
     title: 'TypeScript for Professionals',
     description:
@@ -48,7 +36,7 @@ export const LANGUAGE_VIDEOS: VideoResource[] = [
     url: 'https://www.youtube.com/playlist?list=PL-osiE80TeTt2d9bfVyTiXJA-UTHn6WwU',
   },
   {
-    id: 26,
+    id: 27,
     title: 'How to Golang',
     description: 'Collection of concepts in Go. Not a sequential series!',
     topic: 'go',
@@ -57,5 +45,40 @@ export const LANGUAGE_VIDEOS: VideoResource[] = [
     level: 'Intermediate',
     thumbnail: 'https://i.ytimg.com/vi/-gW7oSFxT2I/maxresdefault.jpg',
     url: 'https://www.youtube.com/playlist?list=PL0xRBLFXXsP7-0IVCmoo2FEWBrQzfH2l8',
+  },
+
+  {
+    id: 26,
+    title: 'Golang Full Course 2026',
+    description: '',
+    topic: 'go',
+    author: 'Sangam Mukherjee',
+    duration: '10h 01m',
+    level: 'Beginner',
+    thumbnail: 'https://i.ytimg.com/vi/DR4QhvIlFfQ/maxresdefault.jpg',
+    url: 'https://www.youtube.com/watch?v=DR4QhvIlFfQ&t=21593s',
+  },
+  {
+    id: 28,
+    title: 'Go Programming – Golang Course with Bonus Projects',
+    description: '',
+    topic: 'go',
+    author: 'Boot Dev',
+    duration: '9h 32m',
+    level: 'Beginner',
+    thumbnail: 'https://i.ytimg.com/vi/un6ZyFkqFKo/maxresdefault.jpg',
+    url: 'https://www.youtube.com/watch?v=un6ZyFkqFKo',
+  },
+
+  {
+    id: 29,
+    title: 'The C++ Programming Language',
+    description: 'Basics to Advanced',
+    topic: 'cpp',
+    author: 'Mike Shah',
+    duration: '250 Videos',
+    level: 'Intermediate',
+    thumbnail: 'https://i.ytimg.com/vi/LGOgNqkRMs0/sddefault.jpg',
+    url: 'https://www.youtube.com/playlist?list=PLvv0ScY6vfd8j-tlhYVPYgiIyXduu6m-L',
   },
 ]

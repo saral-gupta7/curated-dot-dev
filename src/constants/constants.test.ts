@@ -77,7 +77,9 @@ describe('resource taxonomy', () => {
       } else {
         expect(url.pathname).toBe('/playlist')
         expect(url.searchParams.get('list')).toBeTruthy()
-        expect(resource.thumbnail).toMatch(/\/vi\/[\w-]+\/maxresdefault\.jpg$/)
+        expect(resource.thumbnail).toMatch(
+          /\/vi\/[\w-]+\/(?:maxres|sd|hq)default\.jpg$/,
+        )
       }
     }
   })

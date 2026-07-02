@@ -2,18 +2,6 @@ import type { VideoResource } from '../constants.types'
 
 export const BACKEND_VIDEOS: VideoResource[] = [
   {
-    id: 4,
-    title: 'Node.js and Express',
-    description:
-      'From the event loop to a production-minded API with middleware and authentication.',
-    topic: 'express',
-    author: 'freeCodeCamp',
-    duration: '8h 16m',
-    level: 'Beginner',
-    thumbnail: 'https://i.ytimg.com/vi/Oe421EPjeBE/maxresdefault.jpg',
-    url: 'https://www.youtube.com/watch?v=Oe421EPjeBE',
-  },
-  {
     id: 18,
     title: 'Nest JS Full Course 2025 | Node JS Full Course | Part 4',
     description:

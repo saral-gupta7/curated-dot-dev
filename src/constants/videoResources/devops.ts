@@ -1,18 +1,6 @@
 import type { VideoResource } from '../constants.types'
 
 export const DEVOPS_VIDEOS: VideoResource[] = [
-  // {
-  //   id: 8,
-  //   title: 'Docker in 100 Seconds',
-  //   description:
-  //     'A fast orientation to images, containers, Dockerfiles, and why teams use them.',
-  //   topic: 'docker',
-  //   author: 'Fireship',
-  //   duration: '2m 46s',
-  //   level: 'Beginner',
-  //   thumbnail: 'https://i.ytimg.com/vi/Gjnup-PuquQ/maxresdefault.jpg',
-  //   url: 'https://www.youtube.com/watch?v=Gjnup-PuquQ',
-  // },
   {
     id: 11,
     title: 'Docker Full Course with Gitlab CI CD | Learn Docker in 2 hrs',
