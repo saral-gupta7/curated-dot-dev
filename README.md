@@ -15,7 +15,7 @@ The development server runs at `http://localhost:3000`.
 
 ## Content
 
-Content is organized under `src/constants/`: topic navigation in `topicGroups.ts`, videos in `videoResources.ts`, articles in `articleResources.ts`, shared types in `constants.types.ts`, and taxonomy utilities in `topicHelpers.ts`.
+Content is organized under `src/constants/`: topic navigation in `topicGroups.ts`, topic-grouped video files in `videoResources/`, articles in `articleResources.ts`, shared types in `constants.types.ts`, and taxonomy utilities in `topicHelpers.ts`.
 
 ## Quality checks
 

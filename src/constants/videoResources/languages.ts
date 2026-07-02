@@ -1,0 +1,61 @@
+import type { VideoResource } from '../constants.types'
+
+export const LANGUAGE_VIDEOS: VideoResource[] = [
+  {
+    id: 1,
+    title: 'JavaScript: The Hard Parts',
+    description:
+      'A durable mental model for closures, callbacks, and asynchronous JavaScript.',
+    topic: 'javascript',
+    author: 'Frontend Masters',
+    duration: '9h 14m',
+    level: 'Intermediate',
+    thumbnail: 'https://i.ytimg.com/vi/Bv_5Zv5c-Ts/maxresdefault.jpg',
+    url: 'https://www.youtube.com/watch?v=Bv_5Zv5c-Ts',
+  },
+  {
+    id: 2,
+    title: 'TypeScript for Professionals',
+    description:
+      'Types, generics, narrowing, and patterns that scale with a real codebase.',
+    topic: 'typescript',
+    author: 'freeCodeCamp',
+    duration: '5h 09m',
+    level: 'Intermediate',
+    thumbnail: 'https://i.ytimg.com/vi/30LWjhZzg50/maxresdefault.jpg',
+    url: 'https://www.youtube.com/watch?v=30LWjhZzg50',
+  },
+  {
+    id: 10,
+    title: 'Complete TypeScript Course for Beginners',
+    description: '',
+    topic: 'typescript',
+    author: 'Sangam Mukherjee',
+    duration: '5h 30m',
+    level: 'Beginner',
+    thumbnail: 'https://i.ytimg.com/vi/W3G4DuchKFY/maxresdefault.jpg',
+    url: 'https://www.youtube.com/watch?v=W3G4DuchKFY',
+  },
+  {
+    id: 14,
+    title: 'Python Tutorials',
+    description: 'Gold standard for learning python',
+    topic: 'python',
+    author: 'Corey Schafer',
+    duration: '158 Videos',
+    level: 'Beginner',
+    thumbnail: 'https://i.ytimg.com/vi/YYXdXT2l-Gg/maxresdefault.jpg',
+    url: 'https://www.youtube.com/playlist?list=PL-osiE80TeTt2d9bfVyTiXJA-UTHn6WwU',
+  },
+  {
+    id: 26,
+    title: 'How to Golang',
+    description: 'Collection of concepts in Go. Not a sequential series!',
+    topic: 'go',
+    author: 'Anthony GG',
+    duration: '93 Videos',
+    level: 'Intermediate',
+    thumbnail: 'https://i.ytimg.com/vi/-gW7oSFxT2I/maxresdefault.jpg',
+    url: 'https://www.youtube.com/playlist?list=PL0xRBLFXXsP7-0IVCmoo2FEWBrQzfH2l8',
+  },
+]

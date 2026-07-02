@@ -69,9 +69,21 @@ describe('resource taxonomy', () => {
 
   it('keeps YouTube thumbnails aligned with their video IDs', () => {
     for (const resource of VIDEO_RESOURCES) {
-      const videoId = new URL(resource.url).searchParams.get('v')
-      expect(videoId).toBeTruthy()
-      expect(resource.thumbnail).toContain(`/vi/${videoId}/`)
+      const url = new URL(resource.url)
+      const videoId = url.searchParams.get('v')
+
+      if (videoId) {
+        expect(resource.thumbnail).toContain(`/vi/${videoId}/`)
+      } else {
+        expect(url.pathname).toBe('/playlist')
+        expect(url.searchParams.get('list')).toBeTruthy()
+        expect(resource.thumbnail).toMatch(/\/vi\/[\w-]+\/maxresdefault\.jpg$/)
+      }
     }
+  })
+
+  it('uses unique resource IDs across every topic file', () => {
+    const ids = VIDEO_RESOURCES.map((resource) => resource.id)
+    expect(new Set(ids).size).toBe(ids.length)
   })
 })
