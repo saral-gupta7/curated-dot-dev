@@ -149,12 +149,12 @@ export function MobileHeader() {
       <a
         className="flex items-center gap-2.5 text-sm font-bold tracking-[-0.04em]"
         href="/"
-        aria-label="curated.dev home"
+        aria-label="curate.dev home"
       >
         <span className="grid size-7 place-items-center rounded-lg bg-zinc-900 text-[10px] text-zinc-50 dark:bg-zinc-100 dark:text-zinc-950">
           c/
         </span>
-        curated.dev
+        curate.dev
       </a>
       <button
         className={iconButton}
@@ -233,12 +233,12 @@ export function Sidebar() {
           <a
             className="group flex items-center gap-2.5 text-sm font-bold tracking-[-0.04em]"
             href="/"
-            aria-label="curated.dev home"
+            aria-label="curate.dev home"
           >
             <span className="grid size-8 place-items-center rounded-lg bg-zinc-900 text-[11px] text-zinc-50 transition-transform duration-300 ease-out group-hover:-rotate-3 group-hover:scale-105 motion-reduce:transition-none dark:bg-zinc-100 dark:text-zinc-950">
               c/
             </span>
-            curated.dev
+            curate.dev
           </a>
           <button
             className={cn(iconButton, 'lg:hidden')}

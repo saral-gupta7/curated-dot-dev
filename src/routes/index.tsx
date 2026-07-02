@@ -198,7 +198,7 @@ function Home() {
 
         <footer className="grid min-h-28 grid-cols-2 items-center gap-4 border-t border-zinc-200 text-[10px] text-zinc-400 sm:grid-cols-3 dark:border-zinc-800 dark:text-zinc-600">
           <span className="font-bold text-zinc-800 dark:text-zinc-200">
-            curated.dev
+            curate.dev
           </span>
           <p className="hidden text-center sm:block">
             Good resources deserve to be easy to find.
