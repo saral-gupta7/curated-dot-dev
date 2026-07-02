@@ -6,6 +6,14 @@ import {
   getTopicIds,
   getTopicLabel,
 } from './contants'
+import type { TopicNode } from './contants'
+
+function flattenTopicIds(topics: TopicNode[]): string[] {
+  return topics.flatMap((topic) => [
+    topic.id,
+    ...(topic.children ? flattenTopicIds(topic.children) : []),
+  ])
+}
 
 describe('resource taxonomy', () => {
   it('expands a parent category into its child topics', () => {
@@ -26,13 +34,24 @@ describe('resource taxonomy', () => {
     expect(getTopicLabel('kubernetes')).toBe('Kubernetes')
   })
 
+  it('expands backend runtime groups into their framework topics', () => {
+    expect(getTopicIds('go-backend')).toEqual(['gin', 'chi', 'echo'])
+    expect(getTopicIds('python-backend')).toEqual([
+      'fastapi',
+      'flask',
+      'django',
+    ])
+    expect(getTopicIds('javascript-backend')).toEqual([
+      'express',
+      'fastify',
+      'elysia',
+      'nestjs',
+    ])
+    expect(getTopicLabel('nestjs')).toBe('NestJS')
+  })
+
   it('keeps every resource attached to a known topic', () => {
-    const knownTopics = new Set(
-      TOPIC_GROUPS.flatMap((group) => [
-        group.id,
-        ...(group.children?.map((child) => child.id) ?? []),
-      ]),
-    )
+    const knownTopics = new Set(flattenTopicIds(TOPIC_GROUPS))
     const resourceTopics = [...VIDEO_RESOURCES, ...ARTICLE_RESOURCES].map(
       (resource) => resource.topic,
     )

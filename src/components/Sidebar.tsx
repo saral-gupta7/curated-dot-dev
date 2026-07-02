@@ -1,12 +1,130 @@
 import { BookOpen, ChevronDown, Menu, Moon, Search, Sun, X } from 'lucide-react'
 import { useState } from 'react'
 import { useShallow } from 'zustand/react/shallow'
-import { LIBRARY_LINKS, TOPIC_GROUPS } from '../contants'
+import { LIBRARY_LINKS, TOPIC_GROUPS, getTopicIds } from '../contants'
+import type { TopicNode } from '../contants'
 import { cn } from '../lib/utils'
 import { useAppStore } from '../stores/useAppStore'
 
 const iconButton =
   'group grid size-9 shrink-0 cursor-pointer place-items-center rounded-lg text-zinc-500 transition-all duration-200 hover:bg-zinc-200 hover:text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 active:scale-90 motion-reduce:transition-none dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100'
+
+type NestedTopicListProps = {
+  activeTopic: string
+  depth?: number
+  expanded: string[]
+  isVisible: boolean
+  topics: TopicNode[]
+  onClose: () => void
+  onSelect: (topic: string) => void
+  onToggle: (topic: string) => void
+}
+
+function containsTopic(topic: TopicNode, selection: string): boolean {
+  return Boolean(
+    topic.children?.some(
+      (child) => child.id === selection || containsTopic(child, selection),
+    ),
+  )
+}
+
+function NestedTopicList({
+  activeTopic,
+  depth = 0,
+  expanded,
+  isVisible,
+  topics,
+  onClose,
+  onSelect,
+  onToggle,
+}: NestedTopicListProps) {
+  return (
+    <div
+      className={cn(
+        'grid',
+        depth > 0 && 'ml-2 border-l border-zinc-300 pl-2 dark:border-zinc-700',
+      )}
+    >
+      {topics.map((topic) => {
+        const hasChildren = Boolean(topic.children?.length)
+        const isExpanded = expanded.includes(topic.id)
+        const isActive = topic.id === activeTopic
+        const hasActiveDescendant = getTopicIds(topic.id).includes(activeTopic)
+
+        return (
+          <div key={topic.id}>
+            <div
+              className={cn(
+                'group flex rounded-md transition-colors duration-200',
+                (isActive || hasActiveDescendant) &&
+                  'bg-white/70 dark:bg-zinc-800/70',
+              )}
+            >
+              <button
+                tabIndex={isVisible ? 0 : -1}
+                className={cn(
+                  'relative min-w-0 flex-1 rounded-md px-2 py-1.5 text-left text-[11px] text-zinc-500 transition-all duration-200 before:absolute before:-left-[18px] before:top-1/2 before:h-px before:w-0 before:bg-orange-500 before:transition-all hover:translate-x-0.5 hover:bg-white/60 hover:text-zinc-950 hover:before:w-2 motion-reduce:transform-none motion-reduce:transition-none dark:text-zinc-500 dark:hover:bg-zinc-800 dark:hover:text-zinc-100',
+                  depth > 0 && 'text-[10.5px]',
+                  isActive &&
+                    'translate-x-0.5 bg-white font-semibold text-zinc-950 before:w-2 dark:bg-zinc-800 dark:text-zinc-100',
+                )}
+                onClick={() => {
+                  onSelect(topic.id)
+                  if (hasChildren) {
+                    if (!isExpanded) onToggle(topic.id)
+                  } else {
+                    onClose()
+                  }
+                }}
+              >
+                <span className="block truncate">{topic.label}</span>
+              </button>
+              {hasChildren ? (
+                <button
+                  tabIndex={isVisible ? 0 : -1}
+                  className="grid w-7 place-items-center text-zinc-400 transition-colors hover:text-zinc-800 dark:hover:text-zinc-100"
+                  onClick={() => onToggle(topic.id)}
+                  aria-label={`${isExpanded ? 'Collapse' : 'Expand'} ${topic.label}`}
+                >
+                  <ChevronDown
+                    size={12}
+                    className={cn(
+                      'transition-transform duration-300 ease-out motion-reduce:transition-none',
+                      isExpanded && 'rotate-180',
+                    )}
+                  />
+                </button>
+              ) : null}
+            </div>
+
+            {topic.children ? (
+              <div
+                className={cn(
+                  'overflow-hidden transition-[max-height,opacity,transform] duration-300 ease-[cubic-bezier(.16,1,.3,1)] motion-reduce:transition-none',
+                  isExpanded
+                    ? 'max-h-72 translate-y-0 opacity-100'
+                    : 'pointer-events-none max-h-0 -translate-y-1 opacity-0',
+                )}
+                aria-hidden={!isExpanded}
+              >
+                <NestedTopicList
+                  activeTopic={activeTopic}
+                  depth={depth + 1}
+                  expanded={expanded}
+                  isVisible={isVisible && isExpanded}
+                  topics={topic.children}
+                  onClose={onClose}
+                  onSelect={onSelect}
+                  onToggle={onToggle}
+                />
+              </div>
+            ) : null}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
 
 export function MobileHeader() {
   const { openSearch, openSidebar } = useAppStore(
@@ -77,9 +195,7 @@ export function Sidebar() {
     })),
   )
   const activeGroup = TOPIC_GROUPS.find(
-    (group) =>
-      group.id === activeTopic ||
-      group.children?.some((child) => child.id === activeTopic),
+    (group) => group.id === activeTopic || containsTopic(group, activeTopic),
   )?.id
   const [expanded, setExpanded] = useState<string[]>(
     activeGroup && activeGroup !== 'all' ? [activeGroup] : ['languages'],
@@ -197,9 +313,7 @@ export function Sidebar() {
               const Icon = group.icon
               const isExpanded = expanded.includes(group.id)
               const isActive = group.id === activeTopic
-              const hasActiveChild = group.children?.some(
-                (child) => child.id === activeTopic,
-              )
+              const hasActiveChild = containsTopic(group, activeTopic)
 
               return (
                 <div key={group.id}>
@@ -251,7 +365,7 @@ export function Sidebar() {
                       className={cn(
                         'overflow-hidden transition-[max-height,opacity,transform] duration-300 ease-[cubic-bezier(.16,1,.3,1)] motion-reduce:transition-none',
                         isExpanded
-                          ? 'max-h-80 translate-y-0 opacity-100'
+                          ? 'max-h-[50rem] translate-y-0 opacity-100'
                           : 'pointer-events-none max-h-0 -translate-y-1.5 opacity-0',
                       )}
                       aria-hidden={!isExpanded}
@@ -262,24 +376,16 @@ export function Sidebar() {
                           isExpanded ? 'scale-y-100' : 'scale-y-95',
                         )}
                       >
-                        <div className="relative ml-[17px] grid border-l border-zinc-300 py-1 pl-[17px] dark:border-zinc-700">
-                          {group.children.map((child) => (
-                            <button
-                              key={child.id}
-                              tabIndex={isExpanded ? 0 : -1}
-                              className={cn(
-                                'relative rounded-md px-2 py-1.5 text-left text-[11px] text-zinc-500 transition-all duration-200 before:absolute before:-left-[18px] before:top-1/2 before:h-px before:w-0 before:bg-orange-500 before:transition-all hover:translate-x-0.5 hover:bg-white/60 hover:text-zinc-950 hover:before:w-2 motion-reduce:transform-none motion-reduce:transition-none dark:text-zinc-500 dark:hover:bg-zinc-800 dark:hover:text-zinc-100',
-                                activeTopic === child.id &&
-                                  'translate-x-0.5 bg-white font-semibold text-zinc-950 before:w-2 dark:bg-zinc-800 dark:text-zinc-100',
-                              )}
-                              onClick={() => {
-                                setActiveTopic(child.id)
-                                closeSidebar()
-                              }}
-                            >
-                              {child.label}
-                            </button>
-                          ))}
+                        <div className="relative ml-[17px] border-l border-zinc-300 py-1 pl-[17px] dark:border-zinc-700">
+                          <NestedTopicList
+                            activeTopic={activeTopic}
+                            expanded={expanded}
+                            isVisible={isExpanded}
+                            topics={group.children}
+                            onClose={closeSidebar}
+                            onSelect={setActiveTopic}
+                            onToggle={toggleGroup}
+                          />
                         </div>
                       </div>
                     </div>

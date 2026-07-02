@@ -11,13 +11,14 @@ import {
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
-export type TopicChild = { id: string; label: string }
-
-export type TopicGroup = {
+export type TopicNode = {
   id: string
   label: string
+  children?: TopicNode[]
+}
+
+export type TopicGroup = TopicNode & {
   icon: LucideIcon
-  children?: TopicChild[]
 }
 
 export type VideoResource = {
@@ -74,11 +75,39 @@ export const TOPIC_GROUPS: TopicGroup[] = [
     label: 'Backend frameworks',
     icon: Server,
     children: [
-      { id: 'node', label: 'Node.js' },
-      { id: 'spring', label: 'Spring Boot' },
-      { id: 'django', label: 'Django' },
-      { id: 'fastapi', label: 'FastAPI' },
-      { id: 'gin', label: 'Gin' },
+      {
+        id: 'go-backend',
+        label: 'Go',
+        children: [
+          { id: 'gin', label: 'Gin' },
+          { id: 'chi', label: 'Chi' },
+          { id: 'echo', label: 'Echo' },
+        ],
+      },
+      {
+        id: 'python-backend',
+        label: 'Python',
+        children: [
+          { id: 'fastapi', label: 'FastAPI' },
+          { id: 'flask', label: 'Flask' },
+          { id: 'django', label: 'Django' },
+        ],
+      },
+      {
+        id: 'javascript-backend',
+        label: 'JavaScript / TypeScript',
+        children: [
+          { id: 'express', label: 'Express' },
+          { id: 'fastify', label: 'Fastify' },
+          { id: 'elysia', label: 'Elysia' },
+          { id: 'nestjs', label: 'NestJS' },
+        ],
+      },
+      {
+        id: 'java-backend',
+        label: 'Java',
+        children: [{ id: 'spring', label: 'Spring Boot' }],
+      },
     ],
   },
   {
@@ -177,7 +206,7 @@ export const VIDEO_RESOURCES: VideoResource[] = [
     title: 'Node.js and Express',
     description:
       'From the event loop to a production-minded API with middleware and authentication.',
-    topic: 'node',
+    topic: 'express',
     author: 'freeCodeCamp',
     duration: '8h 16m',
     level: 'Beginner',
@@ -310,15 +339,29 @@ export const ARTICLE_RESOURCES: ArticleResource[] = [
 ]
 
 export function getTopicIds(selection: string) {
-  const group = TOPIC_GROUPS.find((item) => item.id === selection)
-  return group?.children?.map((child) => child.id) ?? [selection]
+  const topic = findTopic(TOPIC_GROUPS, selection)
+  return topic ? getLeafTopicIds(topic) : [selection]
 }
 
 export function getTopicLabel(selection: string) {
-  for (const group of TOPIC_GROUPS) {
-    if (group.id === selection) return group.label
-    const child = group.children?.find((item) => item.id === selection)
-    if (child) return child.label
+  return findTopic(TOPIC_GROUPS, selection)?.label ?? 'All resources'
+}
+
+function findTopic(
+  topics: TopicNode[],
+  selection: string,
+): TopicNode | undefined {
+  for (const topic of topics) {
+    if (topic.id === selection) return topic
+    const child = topic.children
+      ? findTopic(topic.children, selection)
+      : undefined
+    if (child) return child
   }
-  return 'All resources'
+  return undefined
+}
+
+function getLeafTopicIds(topic: TopicNode): string[] {
+  if (!topic.children?.length) return [topic.id]
+  return topic.children.flatMap(getLeafTopicIds)
 }
