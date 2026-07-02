@@ -1,26 +1,20 @@
 import { BookOpenText, CornerDownLeft, Play, Search, X } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { KeyboardEvent } from 'react'
-import type { ArticleResource, VideoResource } from '../contants'
+import { useShallow } from 'zustand/react/shallow'
+import { ARTICLE_RESOURCES, VIDEO_RESOURCES } from '../contants'
 import { cn } from '../lib/utils'
+import { useAppStore } from '../stores/useAppStore'
 
-type SearchDialogProps = {
-  articles: ArticleResource[]
-  isOpen: boolean
-  query: string
-  videos: VideoResource[]
-  onClose: () => void
-  onQueryChange: (value: string) => void
-}
-
-export function SearchDialog({
-  articles,
-  isOpen,
-  query,
-  videos,
-  onClose,
-  onQueryChange,
-}: SearchDialogProps) {
+export function SearchDialog() {
+  const { closeSearch, isSearchOpen, query, setQuery } = useAppStore(
+    useShallow((state) => ({
+      closeSearch: state.closeSearch,
+      isSearchOpen: state.isSearchOpen,
+      query: state.query,
+      setQuery: state.setQuery,
+    })),
+  )
   const inputRef = useRef<HTMLInputElement>(null)
   const [isMounted, setIsMounted] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
@@ -28,14 +22,22 @@ export function SearchDialog({
   const results = useMemo(
     () =>
       [
-        ...videos.map((item) => ({
+        ...VIDEO_RESOURCES.filter((item) =>
+          `${item.title} ${item.description} ${item.author} ${item.topic}`
+            .toLowerCase()
+            .includes(query.toLowerCase()),
+        ).map((item) => ({
           id: `video-${item.id}`,
           title: item.title,
           meta: `${item.author} / ${item.duration}`,
           url: item.url,
           kind: 'Video' as const,
         })),
-        ...articles.map((item) => ({
+        ...ARTICLE_RESOURCES.filter((item) =>
+          `${item.title} ${item.description} ${item.publication} ${item.topic}`
+            .toLowerCase()
+            .includes(query.toLowerCase()),
+        ).map((item) => ({
           id: `article-${item.id}`,
           title: item.title,
           meta: `${item.publication} / ${item.readTime}`,
@@ -43,11 +45,11 @@ export function SearchDialog({
           kind: 'Article' as const,
         })),
       ].slice(0, 7),
-    [articles, videos],
+    [query],
   )
 
   useEffect(() => {
-    if (isOpen) {
+    if (isSearchOpen) {
       setIsMounted(true)
       const frame = window.requestAnimationFrame(() => setIsVisible(true))
       const focusTimer = window.setTimeout(() => inputRef.current?.focus(), 60)
@@ -60,7 +62,7 @@ export function SearchDialog({
     setIsVisible(false)
     const exitTimer = window.setTimeout(() => setIsMounted(false), 220)
     return () => window.clearTimeout(exitTimer)
-  }, [isOpen])
+  }, [isSearchOpen])
 
   useEffect(() => {
     setSelectedIndex((index) =>
@@ -82,7 +84,7 @@ export function SearchDialog({
     if (event.key === 'Enter') {
       event.preventDefault()
       window.open(results[selectedIndex]?.url, '_blank', 'noopener,noreferrer')
-      onClose()
+      closeSearch()
     }
   }
 
@@ -95,7 +97,7 @@ export function SearchDialog({
         isVisible && 'bg-zinc-950/70 backdrop-blur-md',
       )}
       role="presentation"
-      onMouseDown={onClose}
+      onMouseDown={closeSearch}
     >
       <section
         className={cn(
@@ -120,7 +122,7 @@ export function SearchDialog({
             ref={inputRef}
             value={query}
             onChange={(event) => {
-              onQueryChange(event.target.value)
+              setQuery(event.target.value)
               setSelectedIndex(0)
             }}
             onKeyDown={handleKeyDown}
@@ -134,7 +136,7 @@ export function SearchDialog({
           />
           <button
             className="grid size-8 place-items-center rounded-lg transition hover:bg-zinc-200 hover:text-zinc-900 active:scale-90 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
-            onClick={onClose}
+            onClick={closeSearch}
             aria-label="Close search"
           >
             <X size={17} />

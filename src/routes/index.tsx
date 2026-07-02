@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { ArrowDown, BookOpenText, Play, Sparkles } from 'lucide-react'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo } from 'react'
+import { useShallow } from 'zustand/react/shallow'
 import { ArticleCard } from '../components/ArticleCard'
 import { MobileHeader, Sidebar } from '../components/Sidebar'
 import { ResourceCard } from '../components/ResourceCard'
@@ -12,42 +13,55 @@ import {
   getTopicLabel,
 } from '../contants'
 import { cn } from '../lib/utils'
+import { useAppStore } from '../stores/useAppStore'
 
 export const Route = createFileRoute('/')({ component: Home })
 
 function Home() {
-  const [activeTopic, setActiveTopic] = useState('all')
-  const [contentType, setContentType] = useState<'videos' | 'articles'>(
-    'videos',
+  const {
+    activeTopic,
+    closeSearch,
+    contentType,
+    darkMode,
+    openSearch,
+    resetLibrary,
+    setContentType,
+  } = useAppStore(
+    useShallow((state) => ({
+      activeTopic: state.activeTopic,
+      closeSearch: state.closeSearch,
+      contentType: state.contentType,
+      darkMode: state.darkMode,
+      openSearch: state.openSearch,
+      resetLibrary: state.resetLibrary,
+      setContentType: state.setContentType,
+    })),
   )
-  const [isSidebarOpen, setSidebarOpen] = useState(false)
-  const [isSearchOpen, setSearchOpen] = useState(false)
-  const [query, setQuery] = useState('')
-  const [darkMode, setDarkMode] = useState(true)
 
   useEffect(() => {
-    const saved = window.localStorage.getItem('curated-theme')
-    setDarkMode(saved ? saved === 'dark' : true)
+    void useAppStore.persist.rehydrate()
   }, [])
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode)
-    window.localStorage.setItem('curated-theme', darkMode ? 'dark' : 'light')
   }, [darkMode])
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
         event.preventDefault()
-        setSearchOpen(true)
+        openSearch()
       }
-      if (event.key === 'Escape') setSearchOpen(false)
+      if (event.key === 'Escape') closeSearch()
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
+  }, [closeSearch, openSearch])
 
-  const selectedTopics = activeTopic === 'all' ? null : getTopicIds(activeTopic)
+  const selectedTopics = useMemo(
+    () => (activeTopic === 'all' ? null : getTopicIds(activeTopic)),
+    [activeTopic],
+  )
   const filteredVideos = useMemo(
     () =>
       VIDEO_RESOURCES.filter(
@@ -64,43 +78,14 @@ function Home() {
       ),
     [selectedTopics],
   )
-  const searchVideos = VIDEO_RESOURCES.filter((resource) =>
-    `${resource.title} ${resource.description} ${resource.author} ${resource.topic}`
-      .toLowerCase()
-      .includes(query.toLowerCase()),
-  )
-  const searchArticles = ARTICLE_RESOURCES.filter((resource) =>
-    `${resource.title} ${resource.description} ${resource.publication} ${resource.topic}`
-      .toLowerCase()
-      .includes(query.toLowerCase()),
-  )
   const visibleItems =
     contentType === 'videos' ? filteredVideos : filteredArticles
   const activeLabel = getTopicLabel(activeTopic)
 
-  const selectContentType = (type: 'videos' | 'articles') => {
-    setContentType(type)
-    setSidebarOpen(false)
-    document.querySelector('#library')?.scrollIntoView({ behavior: 'smooth' })
-  }
-
   return (
     <div className="min-h-dvh bg-[#f4f3ef] font-[Avenir_Next,Avenir,Segoe_UI,sans-serif] text-zinc-900 antialiased selection:bg-orange-200 selection:text-zinc-950 dark:bg-[#10110f] dark:text-zinc-100 dark:selection:bg-orange-700">
-      <MobileHeader
-        onOpen={() => setSidebarOpen(true)}
-        onSearch={() => setSearchOpen(true)}
-      />
-      <Sidebar
-        activeTopic={activeTopic}
-        contentType={contentType}
-        darkMode={darkMode}
-        isOpen={isSidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-        onSearch={() => setSearchOpen(true)}
-        onSelectContentType={selectContentType}
-        onSelectTopic={setActiveTopic}
-        onToggleTheme={() => setDarkMode((value) => !value)}
-      />
+      <MobileHeader />
+      <Sidebar />
 
       <main className="px-4 lg:ml-[294px] lg:px-[5vw]">
         <section className="flex min-h-[min(720px,88dvh)] max-w-5xl flex-col justify-center py-14 sm:py-20">
@@ -203,7 +188,7 @@ function Home() {
               </p>
               <button
                 className="mt-5 rounded-lg bg-zinc-900 px-4 py-2.5 text-xs font-semibold text-zinc-50 transition hover:bg-orange-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 dark:bg-zinc-100 dark:text-zinc-950"
-                onClick={() => setActiveTopic('all')}
+                onClick={resetLibrary}
               >
                 Show all resources
               </button>
@@ -222,14 +207,7 @@ function Home() {
         </footer>
       </main>
 
-      <SearchDialog
-        articles={searchArticles}
-        isOpen={isSearchOpen}
-        query={query}
-        videos={searchVideos}
-        onClose={() => setSearchOpen(false)}
-        onQueryChange={setQuery}
-      />
+      <SearchDialog />
     </div>
   )
 }

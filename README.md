@@ -1,6 +1,6 @@
 # curated.dev
 
-A small, opinionated library of technical videos and articles that are worth keeping. Built with TanStack Start, React 19, Tailwind CSS 4, and TypeScript.
+A small, opinionated library of technical videos and articles that are worth keeping. Built with TanStack Start, React 19, Tailwind CSS 4, Zustand, and TypeScript.
 
 ## Local development
 

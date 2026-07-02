@@ -4,6 +4,8 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 
 import appCss from '../styles.css?url'
 
+const themeInitializer = `try{const value=localStorage.getItem('curated-dev-preferences');const state=value?JSON.parse(value).state:null;document.documentElement.classList.toggle('dark',state?.darkMode!==false)}catch{document.documentElement.classList.add('dark')}`
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -41,6 +43,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark">
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitializer }} />
         <HeadContent />
       </head>
       <body>

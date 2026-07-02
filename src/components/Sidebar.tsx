@@ -1,35 +1,26 @@
 import { BookOpen, ChevronDown, Menu, Moon, Search, Sun, X } from 'lucide-react'
 import { useState } from 'react'
+import { useShallow } from 'zustand/react/shallow'
 import { LIBRARY_LINKS, TOPIC_GROUPS } from '../contants'
 import { cn } from '../lib/utils'
-
-type SidebarProps = {
-  activeTopic: string
-  contentType: 'videos' | 'articles'
-  darkMode: boolean
-  isOpen: boolean
-  onClose: () => void
-  onSearch: () => void
-  onSelectContentType: (type: 'videos' | 'articles') => void
-  onSelectTopic: (topic: string) => void
-  onToggleTheme: () => void
-}
+import { useAppStore } from '../stores/useAppStore'
 
 const iconButton =
   'group grid size-9 shrink-0 cursor-pointer place-items-center rounded-lg text-zinc-500 transition-all duration-200 hover:bg-zinc-200 hover:text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 active:scale-90 motion-reduce:transition-none dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100'
 
-export function MobileHeader({
-  onOpen,
-  onSearch,
-}: {
-  onOpen: () => void
-  onSearch: () => void
-}) {
+export function MobileHeader() {
+  const { openSearch, openSidebar } = useAppStore(
+    useShallow((state) => ({
+      openSearch: state.openSearch,
+      openSidebar: state.openSidebar,
+    })),
+  )
+
   return (
     <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-zinc-200/80 bg-[#f4f3ef]/90 px-4 backdrop-blur-xl lg:hidden dark:border-zinc-800 dark:bg-[#10110f]/90">
       <button
         className={iconButton}
-        onClick={onOpen}
+        onClick={openSidebar}
         aria-label="Open topic menu"
       >
         <Menu
@@ -49,7 +40,7 @@ export function MobileHeader({
       </a>
       <button
         className={iconButton}
-        onClick={onSearch}
+        onClick={openSearch}
         aria-label="Search resources"
       >
         <Search
@@ -61,11 +52,34 @@ export function MobileHeader({
   )
 }
 
-export function Sidebar(props: SidebarProps) {
+export function Sidebar() {
+  const {
+    activeTopic,
+    closeSidebar,
+    contentType,
+    darkMode,
+    isSidebarOpen,
+    openSearch,
+    setActiveTopic,
+    setContentType,
+    toggleTheme,
+  } = useAppStore(
+    useShallow((state) => ({
+      activeTopic: state.activeTopic,
+      closeSidebar: state.closeSidebar,
+      contentType: state.contentType,
+      darkMode: state.darkMode,
+      isSidebarOpen: state.isSidebarOpen,
+      openSearch: state.openSearch,
+      setActiveTopic: state.setActiveTopic,
+      setContentType: state.setContentType,
+      toggleTheme: state.toggleTheme,
+    })),
+  )
   const activeGroup = TOPIC_GROUPS.find(
     (group) =>
-      group.id === props.activeTopic ||
-      group.children?.some((child) => child.id === props.activeTopic),
+      group.id === activeTopic ||
+      group.children?.some((child) => child.id === activeTopic),
   )?.id
   const [expanded, setExpanded] = useState<string[]>(
     activeGroup && activeGroup !== 'all' ? [activeGroup] : ['languages'],
@@ -84,17 +98,19 @@ export function Sidebar(props: SidebarProps) {
       <button
         className={cn(
           'fixed inset-0 z-30 cursor-default bg-zinc-950/60 opacity-0 backdrop-blur-sm transition-opacity duration-300 motion-reduce:transition-none lg:hidden',
-          props.isOpen
+          isSidebarOpen
             ? 'pointer-events-auto opacity-100'
             : 'pointer-events-none',
         )}
-        onClick={props.onClose}
+        onClick={closeSidebar}
         aria-label="Close menu"
       />
       <aside
         className={cn(
           'fixed inset-y-0 left-0 z-40 flex w-[292px] flex-col overflow-hidden border-r border-zinc-200 bg-[#ebeae5] shadow-2xl shadow-zinc-950/10 transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(.16,1,.3,1)] motion-reduce:transition-none lg:inset-y-3 lg:left-3 lg:w-[270px] lg:rounded-2xl lg:border lg:shadow-none dark:border-zinc-800 dark:bg-[#191a18] dark:shadow-black/30',
-          props.isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
+          isSidebarOpen
+            ? 'translate-x-0'
+            : '-translate-x-full lg:translate-x-0',
         )}
       >
         <div className="flex items-center justify-between px-5 pb-4 pt-5">
@@ -110,7 +126,7 @@ export function Sidebar(props: SidebarProps) {
           </a>
           <button
             className={cn(iconButton, 'lg:hidden')}
-            onClick={props.onClose}
+            onClick={closeSidebar}
             aria-label="Close menu"
           >
             <X size={18} />
@@ -119,7 +135,7 @@ export function Sidebar(props: SidebarProps) {
 
         <button
           className="group mx-4 mb-5 grid grid-cols-[18px_1fr_auto] items-center gap-2 rounded-lg border border-zinc-300 bg-white/60 px-3 py-2.5 text-left text-xs text-zinc-500 transition-all duration-200 hover:-translate-y-0.5 hover:border-zinc-400 hover:bg-white hover:shadow-sm focus-visible:outline-2 focus-visible:outline-orange-500 active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-400 dark:hover:border-zinc-600 dark:hover:bg-zinc-900"
-          onClick={props.onSearch}
+          onClick={openSearch}
         >
           <Search
             size={15}
@@ -143,15 +159,20 @@ export function Sidebar(props: SidebarProps) {
                   key={link.id}
                   className={cn(
                     'group relative flex w-full items-center gap-2.5 overflow-hidden rounded-lg px-2.5 py-2 text-left text-xs font-medium text-zinc-600 transition-all duration-200 hover:translate-x-0.5 hover:bg-white/70 hover:text-zinc-950 motion-reduce:transform-none motion-reduce:transition-none dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100',
-                    props.contentType === link.id &&
+                    contentType === link.id &&
                       'bg-white text-zinc-950 shadow-sm dark:bg-zinc-800 dark:text-zinc-100',
                   )}
-                  onClick={() => props.onSelectContentType(link.id)}
+                  onClick={() => {
+                    setContentType(link.id)
+                    document
+                      .querySelector('#library')
+                      ?.scrollIntoView({ behavior: 'smooth' })
+                  }}
                 >
                   <span
                     className={cn(
                       'absolute inset-y-2 left-0 w-0.5 -translate-x-full rounded-full bg-orange-500 transition-transform duration-200 motion-reduce:transition-none',
-                      props.contentType === link.id && 'translate-x-0',
+                      contentType === link.id && 'translate-x-0',
                     )}
                   />
                   <Icon
@@ -159,7 +180,7 @@ export function Sidebar(props: SidebarProps) {
                     strokeWidth={1.8}
                     className={cn(
                       'transition-transform duration-200 group-hover:scale-110 motion-reduce:transition-none',
-                      props.contentType === link.id && 'text-orange-500',
+                      contentType === link.id && 'text-orange-500',
                     )}
                   />
                   {link.label}
@@ -175,9 +196,9 @@ export function Sidebar(props: SidebarProps) {
             {TOPIC_GROUPS.map((group) => {
               const Icon = group.icon
               const isExpanded = expanded.includes(group.id)
-              const isActive = group.id === props.activeTopic
+              const isActive = group.id === activeTopic
               const hasActiveChild = group.children?.some(
-                (child) => child.id === props.activeTopic,
+                (child) => child.id === activeTopic,
               )
 
               return (
@@ -195,7 +216,7 @@ export function Sidebar(props: SidebarProps) {
                         isActive && 'text-zinc-950 dark:text-zinc-100',
                       )}
                       onClick={() => {
-                        props.onSelectTopic(group.id)
+                        setActiveTopic(group.id)
                         if (group.children && !isExpanded) toggleGroup(group.id)
                       }}
                     >
@@ -248,12 +269,12 @@ export function Sidebar(props: SidebarProps) {
                               tabIndex={isExpanded ? 0 : -1}
                               className={cn(
                                 'relative rounded-md px-2 py-1.5 text-left text-[11px] text-zinc-500 transition-all duration-200 before:absolute before:-left-[18px] before:top-1/2 before:h-px before:w-0 before:bg-orange-500 before:transition-all hover:translate-x-0.5 hover:bg-white/60 hover:text-zinc-950 hover:before:w-2 motion-reduce:transform-none motion-reduce:transition-none dark:text-zinc-500 dark:hover:bg-zinc-800 dark:hover:text-zinc-100',
-                                props.activeTopic === child.id &&
+                                activeTopic === child.id &&
                                   'translate-x-0.5 bg-white font-semibold text-zinc-950 before:w-2 dark:bg-zinc-800 dark:text-zinc-100',
                               )}
                               onClick={() => {
-                                props.onSelectTopic(child.id)
-                                props.onClose()
+                                setActiveTopic(child.id)
+                                closeSidebar()
                               }}
                             >
                               {child.label}
@@ -276,13 +297,13 @@ export function Sidebar(props: SidebarProps) {
             </span>
             <button
               className="group relative h-6 w-11 rounded-lg border border-zinc-300 bg-white transition-all duration-200 hover:border-orange-400 active:scale-95 motion-reduce:transition-none dark:border-zinc-700 dark:bg-zinc-900"
-              onClick={props.onToggleTheme}
+              onClick={toggleTheme}
               aria-label="Toggle color theme"
             >
               <span
                 className={cn(
                   'absolute left-1 top-1 size-3.5 rounded bg-zinc-900 transition-transform duration-300 ease-[cubic-bezier(.16,1,.3,1)] motion-reduce:transition-none dark:bg-zinc-100',
-                  props.darkMode && 'translate-x-[19px]',
+                  darkMode && 'translate-x-[19px]',
                 )}
               />
               <Moon
