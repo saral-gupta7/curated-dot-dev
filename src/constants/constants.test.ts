@@ -66,4 +66,12 @@ describe('resource taxonomy', () => {
 
     expect(urls.every((url) => URL.canParse(url))).toBe(true)
   })
+
+  it('keeps YouTube thumbnails aligned with their video IDs', () => {
+    for (const resource of VIDEO_RESOURCES) {
+      const videoId = new URL(resource.url).searchParams.get('v')
+      expect(videoId).toBeTruthy()
+      expect(resource.thumbnail).toContain(`/vi/${videoId}/`)
+    }
+  })
 })
