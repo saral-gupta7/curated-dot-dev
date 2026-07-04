@@ -41,15 +41,15 @@ export const Route = createRootRoute({
       },
       {
         property: 'og:image',
-        content: '/logo512.png',
+        content: '/og.jpg',
       },
       {
         property: 'og:image:width',
-        content: '512',
+        content: '1200',
       },
       {
         property: 'og:image:height',
-        content: '512',
+        content: '672',
       },
       {
         property: 'og:image:alt',
@@ -57,7 +57,7 @@ export const Route = createRootRoute({
       },
       {
         name: 'twitter:card',
-        content: 'summary',
+        content: 'summary_large_image',
       },
       {
         name: 'twitter:title',
@@ -69,7 +69,7 @@ export const Route = createRootRoute({
       },
       {
         name: 'twitter:image',
-        content: '/logo512.png',
+        content: '/og.jpg',
       },
       {
         name: 'twitter:image:alt',
