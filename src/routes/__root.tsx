@@ -1,6 +1,7 @@
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
+import { Analytics } from '@vercel/analytics/next'
 
 import appCss from '../styles.css?url'
 
@@ -29,11 +30,11 @@ export const Route = createRootRoute({
       },
       {
         property: 'og:site_name',
-        content: 'curated.dev',
+        content: 'curate.dev',
       },
       {
         property: 'og:title',
-        content: 'curated.dev | The good stuff, without the digging',
+        content: 'curate.dev | The good stuff, without the digging',
       },
       {
         property: 'og:description',
@@ -61,7 +62,7 @@ export const Route = createRootRoute({
       },
       {
         name: 'twitter:title',
-        content: 'curated.dev | The good stuff, without the digging',
+        content: 'curate.dev | The good stuff, without the digging',
       },
       {
         name: 'twitter:description',
@@ -73,7 +74,7 @@ export const Route = createRootRoute({
       },
       {
         name: 'twitter:image:alt',
-        content: 'curated.dev logo',
+        content: 'curate.dev logo',
       },
     ],
     links: [
@@ -100,6 +101,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
+        <Analytics />
         {import.meta.env.DEV ? (
           <TanStackDevtools
             config={{ position: 'bottom-right' }}
