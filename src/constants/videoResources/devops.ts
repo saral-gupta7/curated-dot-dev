@@ -2,7 +2,7 @@ import type { VideoResource } from '../constants.types'
 
 export const DEVOPS_VIDEOS: VideoResource[] = [
   {
-    id: 11,
+    id: '390a0179-fe8',
     title: 'Docker Full Course with Gitlab CI CD | Learn Docker in 2 hrs',
     description:
       'A fast orientation to images, containers, Dockerfiles, and why teams use them.',
@@ -14,7 +14,7 @@ export const DEVOPS_VIDEOS: VideoResource[] = [
     url: 'https://www.youtube.com/watch?v=-FHyCgiaxkc',
   },
   {
-    id: 12,
+    id: '4f21b186-747',
     title: ' Ansible Full Course | Zero to Hero',
     description: '',
     topic: 'ansible',
@@ -25,7 +25,7 @@ export const DEVOPS_VIDEOS: VideoResource[] = [
     url: 'https://www.youtube.com/watch?v=GROqwFFLl3s',
   },
   {
-    id: 22,
+    id: '8882df24-c53',
     title: 'AWS Course',
     description: '',
     topic: 'aws',

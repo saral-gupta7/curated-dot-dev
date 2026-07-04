@@ -23,6 +23,58 @@ export const Route = createRootRoute({
         name: 'description',
         content: 'A hand-picked library of technical resources for developers.',
       },
+      {
+        property: 'og:type',
+        content: 'website',
+      },
+      {
+        property: 'og:site_name',
+        content: 'curated.dev',
+      },
+      {
+        property: 'og:title',
+        content: 'curated.dev | The good stuff, without the digging',
+      },
+      {
+        property: 'og:description',
+        content: 'A hand-picked library of technical resources for developers.',
+      },
+      {
+        property: 'og:image',
+        content: '/logo512.png',
+      },
+      {
+        property: 'og:image:width',
+        content: '512',
+      },
+      {
+        property: 'og:image:height',
+        content: '512',
+      },
+      {
+        property: 'og:image:alt',
+        content: 'curated.dev logo',
+      },
+      {
+        name: 'twitter:card',
+        content: 'summary',
+      },
+      {
+        name: 'twitter:title',
+        content: 'curated.dev | The good stuff, without the digging',
+      },
+      {
+        name: 'twitter:description',
+        content: 'A hand-picked library of technical resources for developers.',
+      },
+      {
+        name: 'twitter:image',
+        content: '/logo512.png',
+      },
+      {
+        name: 'twitter:image:alt',
+        content: 'curated.dev logo',
+      },
     ],
     links: [
       {

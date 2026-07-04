@@ -11,7 +11,7 @@ export type TopicGroup = TopicNode & {
 }
 
 export type VideoResource = {
-  id: number
+  id: string
   title: string
   description: string
   topic: string
@@ -23,7 +23,7 @@ export type VideoResource = {
 }
 
 export type ArticleResource = {
-  id: number
+  id: string
   title: string
   description: string
   topic: string

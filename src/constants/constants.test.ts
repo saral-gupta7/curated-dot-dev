@@ -50,6 +50,17 @@ describe('resource taxonomy', () => {
     expect(getTopicLabel('nestjs')).toBe('NestJS')
   })
 
+  it('expands the AI category into its related topics', () => {
+    expect(getTopicIds('ai')).toEqual([
+      'machine-learning',
+      'deep-learning',
+      'generative-ai',
+      'llms',
+      'nlp',
+      'computer-vision',
+    ])
+  })
+
   it('keeps every resource attached to a known topic', () => {
     const knownTopics = new Set(flattenTopicIds(TOPIC_GROUPS))
     const resourceTopics = [...VIDEO_RESOURCES, ...ARTICLE_RESOURCES].map(
@@ -84,8 +95,11 @@ describe('resource taxonomy', () => {
     }
   })
 
-  it('uses unique resource IDs across every topic file', () => {
-    const ids = VIDEO_RESOURCES.map((resource) => resource.id)
-    expect(new Set(ids).size).toBe(ids.length)
+  it('uses unique resource IDs within each resource type', () => {
+    const videoIds = VIDEO_RESOURCES.map((resource) => resource.id)
+    const articleIds = ARTICLE_RESOURCES.map((resource) => resource.id)
+
+    expect(new Set(videoIds).size).toBe(videoIds.length)
+    expect(new Set(articleIds).size).toBe(articleIds.length)
   })
 })

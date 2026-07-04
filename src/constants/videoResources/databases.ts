@@ -2,7 +2,7 @@ import type { VideoResource } from '../constants.types'
 
 export const DATABASE_VIDEOS: VideoResource[] = [
   {
-    id: 15,
+    id: 'e06c741a-d9a',
     title: 'Redis Full Course 2026 | Caching, Rate Limiting, Pub/Sub',
     description: '',
     topic: 'redis',
@@ -13,7 +13,7 @@ export const DATABASE_VIDEOS: VideoResource[] = [
     url: 'https://www.youtube.com/watch?v=hFNnNVawHhk',
   },
   {
-    id: 20,
+    id: 'c67b1913-62a',
     title: 'Redis Internals - Build Redis from Scratch',
     description: '',
     topic: 'redis',

@@ -2,7 +2,7 @@ import type { VideoResource } from '../constants.types'
 
 export const LANGUAGE_VIDEOS: VideoResource[] = [
   {
-    id: 2,
+    id: 'a661a464-721',
     title: 'TypeScript for Professionals',
     description:
       'Types, generics, narrowing, and patterns that scale with a real codebase.',
@@ -14,7 +14,7 @@ export const LANGUAGE_VIDEOS: VideoResource[] = [
     url: 'https://www.youtube.com/watch?v=30LWjhZzg50',
   },
   {
-    id: 10,
+    id: '368eb5c5-76e',
     title: 'Complete TypeScript Course for Beginners',
     description: '',
     topic: 'typescript',
@@ -25,7 +25,7 @@ export const LANGUAGE_VIDEOS: VideoResource[] = [
     url: 'https://www.youtube.com/watch?v=W3G4DuchKFY',
   },
   {
-    id: 14,
+    id: 'cb452a3f-1a1',
     title: 'Python Tutorials',
     description: 'Gold standard for learning python',
     topic: 'python',
@@ -36,7 +36,7 @@ export const LANGUAGE_VIDEOS: VideoResource[] = [
     url: 'https://www.youtube.com/playlist?list=PL-osiE80TeTt2d9bfVyTiXJA-UTHn6WwU',
   },
   {
-    id: 27,
+    id: 'a76d4496-740',
     title: 'How to Golang',
     description: 'Collection of concepts in Go. Not a sequential series!',
     topic: 'go',
@@ -48,7 +48,7 @@ export const LANGUAGE_VIDEOS: VideoResource[] = [
   },
 
   {
-    id: 26,
+    id: '723c5ee3-f07',
     title: 'Golang Full Course 2026',
     description: '',
     topic: 'go',
@@ -59,7 +59,7 @@ export const LANGUAGE_VIDEOS: VideoResource[] = [
     url: 'https://www.youtube.com/watch?v=DR4QhvIlFfQ&t=21593s',
   },
   {
-    id: 28,
+    id: '716f4c54-56e',
     title: 'Go Programming – Golang Course with Bonus Projects',
     description: '',
     topic: 'go',
@@ -71,7 +71,7 @@ export const LANGUAGE_VIDEOS: VideoResource[] = [
   },
 
   {
-    id: 29,
+    id: '9cb742ac-f48',
     title: 'The C++ Programming Language',
     description: 'Basics to Advanced',
     topic: 'cpp',
@@ -83,7 +83,7 @@ export const LANGUAGE_VIDEOS: VideoResource[] = [
   },
 
   {
-    id: 30,
+    id: 'ad4367e3-6be',
     title: 'Rust Bootcamp Part 1',
     description: '',
     topic: 'rust',
@@ -95,7 +95,7 @@ export const LANGUAGE_VIDEOS: VideoResource[] = [
   },
 
   {
-    id: 31,
+    id: '88398304-684',
     title: 'Rust Bootcamp Part 2',
     description: '',
     topic: 'rust',

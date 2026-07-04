@@ -2,6 +2,7 @@ import {
   Blocks,
   Boxes,
   Braces,
+  BrainCircuit,
   Cloud,
   Code2,
   Database,
@@ -104,14 +105,27 @@ export const TOPIC_GROUPS: TopicGroup[] = [
     ],
   },
   {
+    id: 'ai',
+    label: 'Artificial intelligence',
+    icon: BrainCircuit,
+    children: [
+      { id: 'machine-learning', label: 'Machine learning' },
+      { id: 'deep-learning', label: 'Deep learning' },
+      { id: 'generative-ai', label: 'Generative AI' },
+      { id: 'llms', label: 'Large language models' },
+      { id: 'nlp', label: 'Natural language processing' },
+      { id: 'computer-vision', label: 'Computer vision' },
+    ],
+  },
+  {
     id: 'developer-tools',
     label: 'Terminal & GitHub',
     icon: GitBranch,
     children: [
       { id: 'git', label: 'Git' },
-      { id: 'github', label: 'GitHub' },
       { id: 'shell', label: 'Shell & terminal' },
       { id: 'cli-tools', label: 'CLI tools' },
+      { id: 'linux', label: '' },
     ],
   },
   {

@@ -2,7 +2,7 @@ import type { VideoResource } from '../constants.types'
 
 export const DEVELOPER_TOOL_VIDEOS: VideoResource[] = [
   {
-    id: 9,
+    id: '0d1b8840-1bf',
     title: 'Git and GitHub for Beginners',
     description:
       'Commits, branches, remotes, pull requests, and resolving common conflicts.',
@@ -14,7 +14,7 @@ export const DEVELOPER_TOOL_VIDEOS: VideoResource[] = [
     url: 'https://www.youtube.com/watch?v=RGOj5yH7evk',
   },
   {
-    id: 16,
+    id: '68743703-09a',
     title:
       'QUIT Struggling with Git! My 3.5-Hour GitHub Blueprint (Beginner to Pro)',
     description:
@@ -27,7 +27,7 @@ export const DEVELOPER_TOOL_VIDEOS: VideoResource[] = [
     url: 'https://www.youtube.com/watch?v=GTFaLDXag08',
   },
   {
-    id: 17,
+    id: 'a82c1c31-997',
     title: 'Learn Git - Full Course for Beginners',
     description:
       'A beginner-friendly course covering repositories, commits, branches, merges, and remote workflows.',

@@ -5,6 +5,7 @@ import { DEVOPS_VIDEOS } from './devops'
 import { ENGINEERING_VIDEOS } from './engineering'
 import { FRONTEND_VIDEOS } from './frontend'
 import { LANGUAGE_VIDEOS } from './languages'
+import { AI_VIDEOS } from './ai'
 import type { VideoResource } from '../constants.types'
 
 export const VIDEO_RESOURCES: VideoResource[] = [
@@ -15,4 +16,5 @@ export const VIDEO_RESOURCES: VideoResource[] = [
   ...DATABASE_VIDEOS,
   ...ENGINEERING_VIDEOS,
   ...DEVELOPER_TOOL_VIDEOS,
-].sort((first, second) => first.id - second.id)
+  ...AI_VIDEOS,
+]
