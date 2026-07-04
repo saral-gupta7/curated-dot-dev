@@ -1,13 +1,11 @@
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
-import { inject } from '@vercel/analytics'
+import { Analytics } from '@vercel/analytics/react'
 
 import appCss from '../styles.css?url'
 
 const themeInitializer = `try{const value=localStorage.getItem('curated-dev-preferences');const state=value?JSON.parse(value).state:null;document.documentElement.classList.toggle('dark',state?.darkMode!==false)}catch{document.documentElement.classList.add('dark')}`
-
-inject()
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -113,6 +111,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             ]}
           />
         ) : null}
+        <Analytics />
         <Scripts />
       </body>
     </html>
