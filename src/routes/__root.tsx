@@ -7,6 +7,7 @@ import appCss from '../styles.css?url'
 
 const themeInitializer = `try{const value=localStorage.getItem('curated-dev-preferences');const state=value?JSON.parse(value).state:null;document.documentElement.classList.toggle('dark',state?.darkMode!==false)}catch{document.documentElement.classList.add('dark')}`
 
+inject()
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -93,7 +94,6 @@ export const Route = createRootRoute({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  inject()
   return (
     <html lang="en" className="dark">
       <head>
